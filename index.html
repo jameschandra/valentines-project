@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Will You Be My Valentine?</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%; /* Ensure full height */
+        overflow: hidden; /* Disable default scrolling */
+        font-family: "Cutive Mono", monospace;
+      }
+      .scroll-container {
+        height: 100vh; /* Full viewport height */
+        overflow-y: scroll; /* Enable scrolling within the container */
+        scroll-snap-type: y mandatory; /* Enable vertical snapping */
+      }
+      .section {
+        height: 100vh; /* Full viewport height for each section */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+        scroll-snap-align: start; /* Align the start of each section */
+      }
+      #storySection {
+        background-color: #ffd1dc; /* Light pink */
+        color: #333;
+      }
+      #questionSection {
+        background-color: #fff0f5; /* Lavender blush */
+        color: #333;
+      }
+      button {
+        padding: 10px 20px;
+        margin: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 18px;
+      }
+      .yes-button {
+        background-color: #ffd1dc;
+      }
+      .no-button {
+        background-color: #fff;
+        border: solid 2px #ffd1dc;
+      }
+      .heart {
+        position: fixed;
+        background-color: pink;
+        height: 50px;
+        width: 50px;
+        transform: rotate(-45deg);
+        opacity: 0;
+        transition: opacity 0.6s ease;
+      }
+      .heart:before,
+      .heart:after {
+        content: '';
+        background-color: pink;
+        border-radius: 50%;
+        height: 50px;
+        width: 50px;
+        position: absolute;
+      }
+      .heart:before {
+        top: -25px;
+        left: 0;
+      }
+      .heart:after {
+        top: 0;
+        left: 25px;
+      }
+      .confetti {
+        position: fixed;
+        width: 10px;
+        height: 15px;
+        background-color: #f0f;
+        opacity: 0;
+        transition: opacity 0.6s ease;
+      }
+      @keyframes moveHearts {
+          0% {
+              transform: translate(0, 0) rotate(-45deg);
+              opacity: 1;
+          }
+          100% {
+              transform: translate(0, -1000px) rotate(-45deg);
+              opacity: 0;
+          }
+      }
+      @keyframes moveConfetti {
+          0% {
+              transform: translate(0, 0);
+              opacity: 1;
+          }
+          100% {
+              transform: translate(0, -1000px);
+              opacity: 0;
+          }
+      }
+      .response-message {
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background-color: white;
+          padding: 20px;
+          border-radius: 10px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          text-align: center;
+          z-index: 1000; /* Ensure it's above other elements */
+      }
+
+      @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+      }
+      #catimage {
+          max-width: 80%;
+          height: auto;
+          display: block; /* Optional: Makes the image a block-level element */
+          margin: 0 auto; /* Optional: Centers the image if its width is less than the container */
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="scroll-container">
+      <div id="storySection" class="section">
+        <h1>Scroll ke bawah 👇</h1>
+      </div>
+      <div id="questionSection" class="section">
+        <h1>Tau I sayang u gaa?</h1>
+        <h1>I kan software engineer ya</h1>
+        <h1>Jadi what better way of expressing something</h1>
+        <h1>Than to make a website for you! Ehe</h1>
+        <h1>Scroll ke bawah lagi seng 👇</h1>
+      </div>
+      <div id="storySection" class="section">
+        <h1>Beberapa hari yang lalu I liat di reels I ada meme kayak gini</h1>
+        <h1>"When it's almost february and my boyfriend hasn't asked me to be his Valentine"</h1>
+        <img src="https://preview.redd.it/i-keep-seeing-this-angry-cat-meme-does-anyone-know-what-v0-n9p8aheg9jw91.jpg?width=640&crop=smart&auto=webp&s=dcab643f90b0ebf4d2d0b5070eb861e3ded173fc" id="catimage">
+        <br></br>
+        <h1>Jadiiiiiii...</h1>
+      </div>
+      <div id="questionSection" class="section">
+        <div id="responseMessage" class="response-message" style="display:none;">
+        </div>
+        <h1>Alexandra Evelyne Wijaya, </br></br>Will You Be My Valentine?</br></h1>
+        <br></br>
+
+        <div class="response-buttons">
+          <button class="yes-button" onclick="responseYes()">Yes</button>
+          <button class="no-button" onclick="responseNo()">No</button>
+        </div>
+      </div>
+    </div>
+    <script>
+      function responseNo() {
+        alert("Oh no! But I'm still happy you're here!");
+      }
+
+      function createHeart() {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animation = `moveHearts ${Math.random() * 2 + 3}s ease-in-out forwards`;
+        document.body.appendChild(heart);
+
+        // Remove heart after animation
+        setTimeout(() => {
+            heart.remove();
+        }, 5000);
+      }
+
+      function createConfetti() {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+        confetti.style.animation = `moveConfetti ${Math.random() * 2 + 3}s ease-in-out forwards`;
+        document.body.appendChild(confetti);
+
+        // Remove confetti after animation
+        setTimeout(() => {
+            confetti.remove();
+        }, 5000);
+      }
+
+      function responseYes() {
+        for (let i = 0; i < 30; i++) {
+            createHeart();
+            createConfetti();
+        }
+
+        // Display the message
+        const messageDiv = document.getElementById('responseMessage');
+        messageDiv.innerHTML = "<p>Yay! You made my day!</p>";
+        messageDiv.style.display = 'block';
+        messageDiv.style.animation = 'fadeIn 1s ease-out';
+
+        setTimeout(() => {
+            messageDiv.style.display = 'none';
+        }, 5000); // Hide after 5 seconds
+      }
+
+    </script>
+  </body>
+</html>
